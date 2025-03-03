@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -60,5 +61,9 @@ public class LearningProgressService {
         progress.setCreatorId("system"); // Thay bằng ID user thực tế
 
         return learningProgressRepository.save(progress);
+    }
+
+    public List<Student> findAllStudentsInClass(String classId) {
+        return learningProgressRepository.findAllStudentsInClass(classId);
     }
 }

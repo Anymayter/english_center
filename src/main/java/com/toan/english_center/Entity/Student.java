@@ -12,7 +12,9 @@ public class Student {
 
     @Id
     private String svId;
-//    private String aId;
+
+    @Column(name = "a_id", columnDefinition = "CHAR(36)", nullable = false)
+    private String aId;
     private String svName;
     private String svEmail;
     private Date svDob;
@@ -29,13 +31,13 @@ public class Student {
     private int svStatus; // sv_status
     private String jsonData; // jsondata
 
-//    public String getaId() {
-//        return aId;
-//    }
-//
-//    public void setaId(String aId) {
-//        this.aId = aId;
-//    }
+    public String getaId() {
+        return aId;
+    }
+
+    public void setaId(String aId) {
+        this.aId = aId;
+    }
 
     public String getSvId() {
         return svId;

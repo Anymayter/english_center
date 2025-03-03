@@ -14,7 +14,9 @@ public class Teacher {
     @Id
     @Column(name = "tc_id", length = 20)
     private String tcId;
-//    private String aId;
+
+    @Column(name = "a_id", columnDefinition = "CHAR(36)", nullable = false)
+    private String aId;
     private String tcName;
     private String tcEmail;
     private String tcDob;
@@ -30,13 +32,13 @@ public class Teacher {
     private String jsonData; // jsondata
 
 
-    //    public String getaId() {
-//        return aId;
-//    }
-//
-//    public void setaId(String aId) {
-//        this.aId = aId;
-//    }
+    public String getaId() {
+        return aId;
+    }
+
+    public void setaId(String aId) {
+        this.aId = aId;
+    }
 
     // Getter and setter
 
