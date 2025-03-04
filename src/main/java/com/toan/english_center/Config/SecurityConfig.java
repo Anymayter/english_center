@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/staff/**").permitAll()
                         .requestMatchers("/api/learning-progress/**").permitAll()
                         .requestMatchers("/api/schedule/**").permitAll()
+                        .requestMatchers("/api/marks/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
