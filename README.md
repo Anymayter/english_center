@@ -7,7 +7,7 @@
 ## Tính năng chính
 
 - **Quản lý người dùng:**
-  - Đăng ký, đăng nhập, phân quyền (Admin, Staff, Teacher, Student)
+  - Đăng nhập, phân quyền (Admin, Staff, Teacher, Student)
   - Quản lý hồ sơ học viên và giáo viên
 - **Quản lý khóa học:**
   - Tạo, chỉnh sửa, xóa khóa học
@@ -22,7 +22,7 @@
 ## Công nghệ sử dụng
 
 - **Backend:** Java Spring Boot, MySQL, Spring Security, JWT
-- **Frontend:** HTML, CSS, JavaScript
+- **Frontend:** HTML, CSS, JavaScript, Nodejs
 - **Database:** MySQL
 - **Authentication:** JWT (JSON Web Token)
 
