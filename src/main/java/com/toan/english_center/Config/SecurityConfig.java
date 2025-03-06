@@ -1,6 +1,5 @@
 package com.toan.english_center.Config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +12,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -21,6 +20,8 @@ public class SecurityConfig{
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/feedbacks/**").permitAll()
+                        .requestMatchers("/api/lessons/**").permitAll() // Allow access to lesson API endpoints
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());
         return http.build();
