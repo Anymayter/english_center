@@ -11,6 +11,7 @@ import java.util.Date;
 public class Student {
 
     @Id
+    @Column(name = "sv_id", columnDefinition = "CHAR(36)", nullable = false)
     private String svId;
 
     @Column(name = "a_id", columnDefinition = "CHAR(36)", nullable = false)
