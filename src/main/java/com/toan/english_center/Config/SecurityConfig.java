@@ -21,6 +21,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/feedbacks/**").permitAll()
                         .requestMatchers("/api/lessons/**").permitAll() // Allow access to lesson API endpoints
+                        .requestMatchers("/api/programs/**").permitAll() // Allow access to program API endpoints
+                        .requestMatchers("/api/teaching-contents/**").permitAll() // Allow access to teaching content API endpoints
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());
