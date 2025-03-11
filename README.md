@@ -1,11 +1,9 @@
 # English Center Management System
 
 ## Giới thiệu
-
-**English Center Management System** là một nền tảng giúp quản lý trung tâm tiếng Anh một cách hiệu quả. Hệ thống hỗ trợ quản lý học viên, giáo viên, khóa học, lịch học, và báo cáo thống kê.
+English Center Management System là một nền tảng giúp quản lý trung tâm tiếng Anh hiệu quả. Hệ thống hỗ trợ quản lý học viên, giáo viên, khóa học, lịch học và báo cáo thống kê.
 
 ## Tính năng chính
-
 - **Quản lý người dùng:**
   - Đăng nhập, phân quyền (Admin, Staff, Teacher, Student)
   - Quản lý hồ sơ học viên và giáo viên
@@ -20,14 +18,23 @@
   - Xuất báo cáo dưới dạng Excel/PDF
 
 ## Công nghệ sử dụng
+### Backend
+- Java Spring Boot
+- MySQL
+- Spring Security
+- JWT (JSON Web Token)
 
-- **Backend:** Java Spring Boot, MySQL, Spring Security, JWT
-- **Frontend:** HTML, CSS, JavaScript, Nodejs
-- **Database:** MySQL
-- **Authentication:** JWT (JSON Web Token)
+### Frontend
+- HTML, CSS, JavaScript
+- Node.js
+
+### Database
+- MySQL 8+
+
+### Authentication
+- JWT (JSON Web Token)
 
 ## Cài đặt và chạy dự án
-
 ### Yêu cầu hệ thống
 - Java 17+
 - Node.js 16+
@@ -36,7 +43,7 @@
 ### Hướng dẫn cài đặt
 #### Backend
 1. Clone repository:
-   ```bash
+   ```sh
    git clone https://github.com/english_center/english-center-management.git
    cd english-center-management/backend
    ```
@@ -49,32 +56,39 @@
        password: yourpassword
    ```
 3. Chạy ứng dụng:
-   ```bash
+   ```sh
    mvn spring-boot:run
    ```
 
 #### Frontend
 1. Chuyển vào thư mục frontend:
-   ```bash
+   ```sh
    cd english-center-management/frontend
    ```
 2. Cài đặt dependencies:
-   ```bash
+   ```sh
    npm install
    ```
 3. Chạy frontend:
-   ```bash
+   ```sh
    npm start
    ```
 
 ## API Documentation
 Sử dụng Swagger để truy cập tài liệu API tại:
-```
-http://localhost:8080/swagger-ui.html
-```
+
+[Swagger UI](http://localhost:8080/swagger-ui.html)
 
 ## Đóng góp
-Nếu bạn muốn đóng góp cho dự án, vui lòng tạo Pull Request hoặc báo lỗi qua Issues.
+Nếu bạn muốn đóng góp cho dự án:
+1. Fork repository
+2. Tạo một nhánh mới (`feature/your-feature-name`)
+3. Commit thay đổi của bạn
+4. Tạo Pull Request
+5. Báo lỗi hoặc đề xuất tính năng mới qua Issues
+
+Cảm ơn bạn đã đóng góp vào English Center Management System! 🚀
+
 
 
 
