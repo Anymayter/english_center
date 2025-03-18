@@ -1,24 +1,12 @@
-package com.toan.english_center.Entity;
-
-
-import jakarta.persistence.*;
+package com.toan.english_center.DTO;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.List;
 
-@Entity
-@Table(name = "tbl_teacher")
-public class Teacher {
+public class TeacherDTO {
 
-    @Id
-    @Column(name = "tc_id", length = 20)
     private String tcId;
-
-    @ManyToOne
-    @JoinColumn(name = "a_id", nullable = false)
-    private Account account;
-
+    private String aId;
     private String tcName;
     private String tcEmail;
     private String tcDob;
@@ -36,21 +24,20 @@ public class Teacher {
 
     // Getter and setter
 
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
     public String getTcId() {
         return tcId;
     }
 
     public void setTcId(String tcId) {
         this.tcId = tcId;
+    }
+
+    public String getaId() {
+        return aId;
+    }
+
+    public void setaId(String aId) {
+        this.aId = aId;
     }
 
     public String getTcName() {
@@ -156,6 +143,4 @@ public class Teacher {
     public void setJsonData(String jsonData) {
         this.jsonData = jsonData;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.toan.english_center.Controller;
 
 
+import com.toan.english_center.DTO.TeacherDTO;
 import com.toan.english_center.Entity.Teacher;
 import com.toan.english_center.Service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,19 @@ public class TeacherController {
         return teacherService.save(tcId, updatedTeacher);
     }
 
-    // 3. Thêm mới giáo viên
+//    // 3. Thêm mới giáo viên
+//    @PostMapping("/create")
+//    public Teacher createTeacher(@RequestBody Teacher teacher) {
+//        if (teacher.getTcId() == null || teacher.getTcId().isEmpty()) {
+//            teacher.setTcId(generateSimpleTcId());
+//        }
+//        return teacherService.createTc(teacher);
+//    }
+
     @PostMapping("/create")
-    public Teacher createTeacher(@RequestBody Teacher teacher) {
-        if (teacher.getTcId() == null || teacher.getTcId().isEmpty()) {
-            teacher.setTcId(generateSimpleTcId());
-        }
-        return teacherService.createTc(teacher);
+    public ResponseEntity<Teacher> createTeacher(@RequestBody TeacherDTO teacherDTO) {
+        Teacher teacher = teacherService.createTeacher(teacherDTO);
+        return ResponseEntity.ok(teacher);
     }
 
     private String generateSimpleTcId() {

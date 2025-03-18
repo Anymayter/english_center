@@ -1,9 +1,13 @@
 package com.toan.english_center.Controller;
 
 
+import com.toan.english_center.DTO.StaffDTO;
+import com.toan.english_center.DTO.StudentDTO;
 import com.toan.english_center.Entity.Staff;
+import com.toan.english_center.Entity.Student;
 import com.toan.english_center.Service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,17 +37,15 @@ public class StaffController {
         return staffService.save(staffId, updatedStaff);
     }
 
-    // 3. Thêm mới nhân viên
+
     @PostMapping("/create")
-    public Staff createStaff(@RequestBody Staff staff) {
-        if (staff.getStaffId() == null || staff.getStaffId().isEmpty()) {
-            staff.setStaffId(generateSimpleStaffId());
-        }
-        return staffService.createStaff(staff);
+    public ResponseEntity<Staff> createStaff(@RequestBody StaffDTO staffDTO) {
+        Staff staff = staffService.createStaff(staffDTO);
+        return ResponseEntity.ok(staff);
     }
 
-    private String generateSimpleStaffId() {
-        // Custom logic to generate a simple staffId
+    private String generateSimpleTcId() {
+        // Custom logic to generate a simple tcId
         return "ST" + String.valueOf(System.currentTimeMillis()).substring(5);
     }
 

@@ -1,9 +1,13 @@
 package com.toan.english_center.Controller;
 
+import com.toan.english_center.DTO.StudentDTO;
+import com.toan.english_center.DTO.TeacherDTO;
 import com.toan.english_center.Entity.Student;
 
+import com.toan.english_center.Entity.Teacher;
 import com.toan.english_center.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,17 +37,15 @@ public class StudentController {
         return studentService.save(svId, updatedStudent);
     }
 
-    // 3. Thêm mới sinh viên
     @PostMapping("/create")
-    public Student createStudent(@RequestBody Student student) {
-        if (student.getSvId() == null || student.getSvId().isEmpty()) {
-            student.setSvId(generateSimpleSvId());
-        }
-        return studentService.createSv(student);
+    public ResponseEntity<Student> createStudent(@RequestBody StudentDTO studentDTO) {
+        Student student = studentService.createStudent(studentDTO);
+        return ResponseEntity.ok(student);
     }
-    private String generateSimpleSvId() {
-        // Custom logic to generate a simple svId
-        return "SV" + String.valueOf(System.currentTimeMillis()).substring(0, 5);
+
+    private String generateSimpleTcId() {
+        // Custom logic to generate a simple tcId
+        return "SV" + String.valueOf(System.currentTimeMillis()).substring(5);
     }
 
     // 4. Xóa sinh viên theo ID

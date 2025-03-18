@@ -1,7 +1,12 @@
 package com.toan.english_center.Service;
 
+import com.toan.english_center.DTO.StaffDTO;
+import com.toan.english_center.DTO.StudentDTO;
+import com.toan.english_center.Entity.Account;
 import com.toan.english_center.Entity.Staff;
+import com.toan.english_center.Entity.Student;
 import com.toan.english_center.Entity.Teacher;
+import com.toan.english_center.Repository.AccountRepository;
 import com.toan.english_center.Repository.StaffRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,9 @@ public class StaffService {
 
     @Autowired
     private StaffRepository staffRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Transactional
     public List<Staff> findAllStaff() {
@@ -33,11 +41,33 @@ public class StaffService {
     }
 
     @Transactional
-    public Staff createStaff(Staff staff) {
-        if (staff.getCreatedDate() == null) {
-            staff.setCreatedDate(LocalDate.now());
-        }
+    public Staff createStaff(StaffDTO staffDTO) {
+        Staff staff = new Staff();
+
+        Account account = accountRepository.findById(staffDTO.getaId())
+                .orElseThrow(() -> new RuntimeException("Account not found with id: " + staffDTO.getaId()));
+
+        staff.setAccount(account);
+
+        staff.setStaffId(staffDTO.getStaffId() == null ? generateSimpleTcId() : staffDTO.getStaffId());
+        staff.setStaffName(staffDTO.getStaffName());
+        staff.setStaffDob(staffDTO.getStaffDob());
+        staff.setStaffEmail(staffDTO.getStaffEmail());
+        staff.setStaffPhoneNumber(staffDTO.getStaffPhoneNumber());
+        staff.setStaffGender(staffDTO.getStaffGender());
+        staff.setStaffImage(staffDTO.getStaffImage());
+        staff.setStaffRole(staffDTO.getStaffRole());
+        staff.setStaffStatus(staffDTO.getStaffStatus());
+        staff.setCreatorId(staffDTO.getCreatorId());
+        staff.setJsonData(staffDTO.getJsonData());
+        staff.setCreatedDate(LocalDate.now());
+
         return staffRepository.save(staff);
+    }
+
+    private String generateSimpleTcId() {
+        // Custom logic to generate a simple tcId
+        return "ST" + String.valueOf(System.currentTimeMillis()).substring(5);
     }
 
     @Transactional

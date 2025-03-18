@@ -1,23 +1,13 @@
-package com.toan.english_center.Entity;
+package com.toan.english_center.DTO;
 
-import jakarta.persistence.*;
-
+import javax.naming.ldap.PagedResultsControl;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 
-@Entity
-@Table(name = "tbl_student")
-public class Student {
+public class StudentDTO {
 
-    @Id
-    @Column(name = "sv_id", columnDefinition = "CHAR(36)", nullable = false)
     private String svId;
-
-    @ManyToOne
-    @JoinColumn(name = "a_id", nullable = false)
-    private Account account;
-
+    private String aId;
     private String svName;
     private String svEmail;
     private String svDob;
@@ -31,19 +21,10 @@ public class Student {
     private Timestamp updatedDate;
     private String creatorId; // creator_id
     private String updatorId; // updator_id
-    private int svStatus; // sv_status
+    private Integer svStatus; // sv_status
     private String jsonData; // jsondata
 
     // Getter and setter
-
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public String getSvId() {
         return svId;
@@ -51,6 +32,14 @@ public class Student {
 
     public void setSvId(String svId) {
         this.svId = svId;
+    }
+
+    public String getaId() {
+        return aId;
+    }
+
+    public void setaId(String aId) {
+        this.aId = aId;
     }
 
     public String getSvName() {
@@ -67,6 +56,14 @@ public class Student {
 
     public void setSvEmail(String svEmail) {
         this.svEmail = svEmail;
+    }
+
+    public String getSvDob() {
+        return svDob;
+    }
+
+    public void setSvDob(String svDob) {
+        this.svDob = svDob;
     }
 
     public String getSvPhoneNumber() {
@@ -149,11 +146,11 @@ public class Student {
         this.updatorId = updatorId;
     }
 
-    public int getSvStatus() {
+    public Integer getSvStatus() {
         return svStatus;
     }
 
-    public void setSvStatus(int svStatus) {
+    public void setSvStatus(Integer svStatus) {
         this.svStatus = svStatus;
     }
 
@@ -163,13 +160,5 @@ public class Student {
 
     public void setJsonData(String jsonData) {
         this.jsonData = jsonData;
-    }
-
-    public String getSvDob() {
-        return svDob;
-    }
-
-    public void setSvDob(String svDob) {
-        this.svDob = svDob;
     }
 }

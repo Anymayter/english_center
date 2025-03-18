@@ -1,11 +1,17 @@
 package com.toan.english_center.Service;
 
+import com.toan.english_center.DTO.StudentDTO;
+import com.toan.english_center.DTO.TeacherDTO;
+import com.toan.english_center.Entity.Account;
 import com.toan.english_center.Entity.Student;
+import com.toan.english_center.Entity.Teacher;
+import com.toan.english_center.Repository.AccountRepository;
 import com.toan.english_center.Repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +20,9 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Transactional
     public List<Student> findAllSv() {
@@ -26,8 +35,33 @@ public class StudentService {
     }
 
     @Transactional
-    public Student createSv(Student student) {
+    public Student createStudent(StudentDTO studentDTO) {
+        Student student = new Student();
+
+        Account account = accountRepository.findById(studentDTO.getaId())
+                .orElseThrow(() -> new RuntimeException("Account not found with id: " + studentDTO.getaId()));
+
+        student.setAccount(account);
+
+        student.setSvId(studentDTO.getSvId() == null ? generateSimpleTcId() : studentDTO.getSvId());
+        student.setSvName(studentDTO.getSvName());
+        student.setSvDob(studentDTO.getSvDob());
+        student.setSvEmail(studentDTO.getSvEmail());
+        student.setSvPhoneNumber(studentDTO.getSvPhoneNumber());
+        student.setSvGender(studentDTO.getSvGender());
+        student.setSvImage(studentDTO.getSvImage());
+        student.setSvRole(studentDTO.getSvRole());
+        student.setSvStatus(studentDTO.getSvStatus());
+        student.setCreatorId(studentDTO.getCreatorId());
+        student.setJsonData(studentDTO.getJsonData());
+        student.setCreatedDate(LocalDate.now());
+
         return studentRepository.save(student);
+    }
+
+    private String generateSimpleTcId() {
+        // Custom logic to generate a simple tcId
+        return "TC" + String.valueOf(System.currentTimeMillis()).substring(5);
     }
 
     @Transactional

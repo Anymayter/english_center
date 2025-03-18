@@ -15,8 +15,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -42,8 +46,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/account/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/students/**").authenticated()
+                        .requestMatchers("/api/students/**").permitAll()
                         .requestMatchers("/api/teachers/**").permitAll()
                         .requestMatchers("/api/classes/**").permitAll()
                         .requestMatchers("/api/staff/**").permitAll()
@@ -51,7 +56,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/schedule/**").permitAll()
                         .requestMatchers("/api/marks/**").permitAll()
                         .requestMatchers("/api/feedbacks/**").permitAll()
-                        .anyRequest().authenticated()
+
+
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(withDefaults());
@@ -108,4 +114,13 @@ public class SecurityConfig {
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
+//        @Bean
+//        public UserDetailsService userDetailsService() {
+//            UserDetails user = User.withDefaultPasswordEncoder()
+//                    .username("user")
+//                    .password("password")
+//                    .roles("USER")
+//                    .build();
+//            return new InMemoryUserDetailsManager(user);
+//        }
 }

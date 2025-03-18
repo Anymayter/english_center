@@ -1,25 +1,15 @@
-package com.toan.english_center.Entity;
-
-
-import jakarta.persistence.*;
+package com.toan.english_center.DTO;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tbl_staff")
-public class Staff {
+public class StaffDTO {
 
-    @Id
-    @Column(name = "staff_id", columnDefinition = "VARCHAR(255)")
     private String staffId;
-
-    @ManyToOne
-    @JoinColumn(name = "a_id", nullable = false)
-    private Account account;
+    private String aId;
     private String staffName;
-    private String staffDob;
     private String staffEmail;
+    private String staffDob;
     private String staffPhoneNumber;
     private String staffGender;
     private String staffImage;
@@ -28,19 +18,10 @@ public class Staff {
     private Timestamp updatedDate;
     private String creatorId; // creator_id
     private String updatorId; // updator_id
-    private Integer staffStatus; // staff_status
+    private Integer staffStatus; // sv_status
     private String jsonData; // jsondata
 
     // Getter and setter
-
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public String getStaffId() {
         return staffId;
@@ -48,6 +29,14 @@ public class Staff {
 
     public void setStaffId(String staffId) {
         this.staffId = staffId;
+    }
+
+    public String getaId() {
+        return aId;
+    }
+
+    public void setaId(String aId) {
+        this.aId = aId;
     }
 
     public String getStaffName() {
@@ -58,20 +47,20 @@ public class Staff {
         this.staffName = staffName;
     }
 
-    public String getStaffDob() {
-        return staffDob;
-    }
-
-    public void setStaffDob(String staffDob) {
-        this.staffDob = staffDob;
-    }
-
     public String getStaffEmail() {
         return staffEmail;
     }
 
     public void setStaffEmail(String staffEmail) {
         this.staffEmail = staffEmail;
+    }
+
+    public String getStaffDob() {
+        return staffDob;
+    }
+
+    public void setStaffDob(String staffDob) {
+        this.staffDob = staffDob;
     }
 
     public String getStaffPhoneNumber() {
