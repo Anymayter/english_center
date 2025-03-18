@@ -31,7 +31,7 @@ public class ClassController {
         return classService.save(classes, tcId);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/getAll")
     public List<Classes> getAllClass() {
         return classService.findAll();
     }
