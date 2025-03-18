@@ -15,16 +15,16 @@ public class Account {
     @Id
     @Column(name = "a_id", columnDefinition = "CHAR(36)", nullable = false)
     @NotNull
-    private String id;
+    private String aId;
 
     @Column(name = "a_uid", nullable = false)
-    private String username;
+    private String aUid;
 
     @Column(name = "a_pwd", nullable = false)
-    private String password;
+    private String aPwd;
 
     @Column(name = "a_type", nullable = false)
-    private int type; // 0: admin, 1: teacher, 2: student, 3: staff
+    private int aType; // 0: admin, 1: teacher, 2: student, 3: staff
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
@@ -33,48 +33,49 @@ public class Account {
     private LocalDateTime updatedDate;
 
     @Column(name = "a_status")
-    private int status = 1;
+    private int aStatus = 1;
 
     @Column(name = "jsondata")
     private String jsonData;
 
     // Constructors
     public Account() {
-        this.id = java.util.UUID.randomUUID().toString();
+        this.aId = java.util.UUID.randomUUID().toString();
     }
 
     // Getter and setter
 
-    public String getId() {
-        return id;
+
+    public @NotNull String getaId() {
+        return aId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setaId(@NotNull String aId) {
+        this.aId = aId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getaUid() {
+        return aUid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setaUid(String aUid) {
+        this.aUid = aUid;
     }
 
-    public String getPassword() {
-        return password;
+    public String getaPwd() {
+        return aPwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setaPwd(String aPwd) {
+        this.aPwd = aPwd;
     }
 
-    public int getType() {
-        return type;
+    public int getaType() {
+        return aType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setaType(int aType) {
+        this.aType = aType;
     }
 
     public LocalDateTime getCreatedDate() {
@@ -93,12 +94,12 @@ public class Account {
         this.updatedDate = updatedDate;
     }
 
-    public int getStatus() {
-        return status;
+    public int getaStatus() {
+        return aStatus;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setaStatus(int aStatus) {
+        this.aStatus = aStatus;
     }
 
     public String getJsonData() {

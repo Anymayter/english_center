@@ -37,20 +37,20 @@ public class AuthenticationService {
 //        return jwtUtil.generateToken(account.getId(), role);
 //    }
 
-    public AuthenticationResponse authenticate(String username, String password) {
-        Optional<Account> accountOpt = accountRepository.findByUsername(username);
+    public AuthenticationResponse authenticate(String aUid, String aPwd) {
+        Optional<Account> accountOpt = accountRepository.findByaUid(aUid);
         if (accountOpt.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
         Account account = accountOpt.get();
-        if (account.getStatus() != 1) {
+        if (account.getaStatus() != 1) {
             throw new BadCredentialsException("Account is inactive");
         }
-        if (!account.getPassword().equals(password)) {
+        if (!account.getaPwd().equals(aPwd)) {
             throw new BadCredentialsException("Invalid password");
         }
-        String role = getRoleFromType(account.getType());
-        String token = jwtUtil.generateToken(account.getId(), role);
+        String role = getRoleFromType(account.getaType());
+        String token = jwtUtil.generateToken(account.getaId(), role);
         return new AuthenticationResponse(token, role);
     }
 
