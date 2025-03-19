@@ -41,6 +41,11 @@ public class StudentService {
         Account account = accountRepository.findById(studentDTO.getaId())
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + studentDTO.getaId()));
 
+        // Kiểm tra loại tài khoản
+        if (account.getaType() != 2) { // Giả sử aType = 1 là Student
+            throw new RuntimeException("Cannot assign account with type " + account.getaType() + " to a Student.");
+        }
+
         student.setAccount(account);
 
         student.setSvId(studentDTO.getSvId() == null ? generateSimpleTcId() : studentDTO.getSvId());

@@ -2,6 +2,8 @@ package com.toan.english_center.Repository;
 
 
 import com.toan.english_center.Entity.Teacher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +17,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
     Teacher save(Teacher teacher);
     void deleteByTcId(String tcId);
     Optional<Teacher> findById(String tcId);
+    Page<Teacher> findAll(Pageable pageable);
 }

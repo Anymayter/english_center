@@ -47,6 +47,11 @@ public class StaffService {
         Account account = accountRepository.findById(staffDTO.getaId())
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + staffDTO.getaId()));
 
+        // Kiểm tra loại tài khoản
+        if (account.getaType() != 3) { // Giả sử aType = 1 là Staff
+            throw new RuntimeException("Cannot assign account with type " + account.getaType() + " to a Staff.");
+        }
+
         staff.setAccount(account);
 
         staff.setStaffId(staffDTO.getStaffId() == null ? generateSimpleTcId() : staffDTO.getStaffId());

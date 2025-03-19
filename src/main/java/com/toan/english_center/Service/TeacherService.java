@@ -60,6 +60,11 @@ public class TeacherService {
         Account account = accountRepository.findById(teacherDTO.getaId())
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + teacherDTO.getaId()));
 
+        // Kiểm tra loại tài khoản
+        if (account.getaType() != 1) { // Giả sử aType = 1 là Teacher
+            throw new RuntimeException("Cannot assign account with type " + account.getaType() + " to a Teacher.");
+        }
+
         teacher.setAccount(account);
 
         teacher.setTcId(teacherDTO.getTcId() == null ? generateSimpleTcId() : teacherDTO.getTcId());
