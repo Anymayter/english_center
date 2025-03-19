@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_schedule")
@@ -143,6 +144,15 @@ public class Schedule {
     public void setUpdatorId(String updatorId) {
         this.updatorId = updatorId;
     }
+
+    public String getTeacherName() {
+        if (teacher != null) {
+            return teacher.getTcName();
+        } else {
+            return "No teacher assigned";
+        }
+    }
+
 
 
 }
