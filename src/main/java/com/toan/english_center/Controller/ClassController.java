@@ -27,13 +27,18 @@ public class ClassController {
     }
 
     @PostMapping("/create")
-    public Classes save(@RequestBody Classes classes, @RequestParam String tcId) {
-        return classService.save(classes, tcId);
+    public Classes createClass(@RequestBody Classes classes, @RequestParam String tcId) {
+        return classService.createClass(classes, tcId);
     }
 
     @GetMapping("/getAll")
     public List<Classes> getAllClass() {
         return classService.findAll();
+    }
+
+    @PutMapping("/updateTeacher/{classId}")
+    public Classes updateTeacherForClass(@PathVariable String classId, @RequestParam String tcId) {
+        return classService.updateTeacherForClass(classId, tcId);
     }
 
 

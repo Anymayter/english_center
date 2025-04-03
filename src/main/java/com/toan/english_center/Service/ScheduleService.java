@@ -1,6 +1,6 @@
 package com.toan.english_center.Service;
 
-import com.toan.english_center.DTO.ScheduleCreateDTO;
+import com.toan.english_center.DTO.ScheduleDTO;
 import com.toan.english_center.Entity.*;
 import com.toan.english_center.Exception.ResourceNotFoundException;
 import com.toan.english_center.Repository.ClassRepository;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
@@ -27,7 +28,7 @@ public class ScheduleService {
     private TeacherRepository teacherRepository;
 
     @Transactional
-    public Schedule createSchedule(ScheduleCreateDTO dto) {
+    public Schedule createSchedule(ScheduleDTO dto) {
         // Kiểm tra lớp học tồn tại
         Classes classObj = classRepository.findById(dto.getClassId())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp với ID: " + dto.getClassId()));
@@ -65,6 +66,27 @@ public class ScheduleService {
     @Transactional
     public List<Schedule> getAllSchedule() {
         return scheduleRepository.findAll();
+    }
+
+    @Transactional
+    public List<Schedule> getSchedulesByStudentId(String svId) {
+        return scheduleRepository.findSchedulesByStudentId(svId);
+    }
+
+    @Transactional
+    public List<ScheduleDTO> findSchedulesByTeacherId(String tcId) {
+        List<Schedule> schedules = scheduleRepository.findByTcIdOrderByStartTime(tcId);
+        return schedules.stream().map(schedule -> {
+            ScheduleDTO dto = new ScheduleDTO();
+            dto.setScheduleId(schedule.getScheduleId());
+//            dto.setTcId(schedule.getTcId());
+            dto.setClassId(schedule.getClassId());
+            dto.setClassName(schedule.getClasses().getClassName());
+            dto.setClassDescription(schedule.getClasses().getClassDescription());
+            dto.setStartTime(schedule.getStartTime());
+            dto.setEndTime(schedule.getEndTime());
+            return dto;
+        }).collect(Collectors.toList());
     }
 
 

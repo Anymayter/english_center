@@ -1,5 +1,6 @@
 package com.toan.english_center.Repository;
 
+import com.toan.english_center.DTO.StudentDTO;
 import com.toan.english_center.Entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

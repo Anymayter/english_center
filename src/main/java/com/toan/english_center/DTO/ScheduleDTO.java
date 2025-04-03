@@ -5,23 +5,43 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
-public class ScheduleCreateDTO {
-    @NotBlank(message = "Class ID là bắt buộc")
+public class ScheduleDTO {
+    private String scheduleId;
     private String classId;
-
-    @NotBlank(message = "Teacher ID là bắt buộc")
     private String tcId;
-
-    @NotNull(message = "Start time là bắt buộc")
+    private String className;
     private Date startTime;
-
-    @NotNull(message = "End time là bắt buộc")
+    private String classDescription;
     private Date endTime;
-
     private String creatorId;
     private String jsonData;
 
     // Getters and setters
+
+
+    public String getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(String scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getClassDescription() {
+        return classDescription;
+    }
+
+    public void setClassDescription(String classDescription) {
+        this.classDescription = classDescription;
+    }
 
     public String getClassId() {
         return classId;

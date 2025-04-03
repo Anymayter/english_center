@@ -7,6 +7,7 @@ import com.toan.english_center.Entity.Teacher;
 import com.toan.english_center.Repository.AccountRepository;
 import com.toan.english_center.Repository.TeacherRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class TeacherService {
@@ -25,89 +29,69 @@ public class TeacherService {
     private AccountRepository accountRepository;
 
     @Transactional
-    public List<Teacher> findAllTc() {
-        return teacherRepository.findAll();
+    public List<TeacherDTO> findAllTc() {
+        return teacherRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public Teacher findByTcId(String tcId) {
-        return teacherRepository.findById(tcId).orElse(null);
+    public TeacherDTO findByTcId(String tcId) {
+        Teacher teacher = teacherRepository.findById(tcId).orElse(null);
+        return convertToDTO(teacher);
     }
-
-//    @Transactional
-//    public Teacher createTc(Teacher teacher) {
-//        return teacherRepository.save(teacher);
-//    }
 
     @Transactional
     public void deleteByTcId(String tcId) {
         teacherRepository.deleteByTcId(tcId);
     }
 
-
-//    @Transactional
-//    public Teacher createTc(Teacher teacher) {
-//        if (teacher.getCreatedDate() == null) {
-//            teacher.setCreatedDate(LocalDate.now());
-//        }
-//        return teacherRepository.save(teacher);
-//    }
-
     @Transactional
-    public Teacher createTeacher(TeacherDTO teacherDTO) {
+    public TeacherDTO createTeacher(TeacherDTO teacherDTO) {
         Teacher teacher = new Teacher();
 
         Account account = accountRepository.findById(teacherDTO.getaId())
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + teacherDTO.getaId()));
 
-        // Kiểm tra loại tài khoản
-        if (account.getaType() != 1) { // Giả sử aType = 1 là Teacher
+        if (account.getaType() != 1) {
             throw new RuntimeException("Cannot assign account with type " + account.getaType() + " to a Teacher.");
         }
 
         teacher.setAccount(account);
-
+        BeanUtils.copyProperties(teacherDTO, teacher);
         teacher.setTcId(teacherDTO.getTcId() == null ? generateSimpleTcId() : teacherDTO.getTcId());
-        teacher.setTcName(teacherDTO.getTcName());
-        teacher.setTcDob(teacherDTO.getTcDob());
-        teacher.setTcEmail(teacherDTO.getTcEmail());
-        teacher.setTcPhoneNumber(teacherDTO.getTcPhoneNumber());
-        teacher.setTcGender(teacherDTO.getTcGender());
-        teacher.setTcImage(teacherDTO.getTcImage());
-        teacher.setTcRole(teacherDTO.getTcRole());
-        teacher.setTcStatus(teacherDTO.getTcStatus());
-        teacher.setCreatorId(teacherDTO.getCreatorId());
-        teacher.setJsonData(teacherDTO.getJsonData());
         teacher.setCreatedDate(LocalDate.now());
 
-        return teacherRepository.save(teacher);
+        teacher = teacherRepository.save(teacher);
+        return convertToDTO(teacher);
     }
 
     private String generateSimpleTcId() {
-        // Custom logic to generate a simple tcId
-        return "TC" + String.valueOf(System.currentTimeMillis()).substring(5);
+        long currentTime = System.currentTimeMillis() % 1000;
+        int randomNum = new Random().nextInt(90) + 10;
+        return "TC" + currentTime + randomNum;
     }
 
     @Transactional
-    public Teacher save(String tcId, Teacher updatedTeacher) {
-        Teacher existingTeacher = teacherRepository.findByTcId(tcId);
+    public TeacherDTO save(String tcId, TeacherDTO updatedTeacherDTO) {
+        Optional<Teacher> existingTeacherOpt = teacherRepository.findById(tcId);
 
-        if (existingTeacher != null) {
-            existingTeacher.setTcName(updatedTeacher.getTcName());
-            existingTeacher.setTcEmail(updatedTeacher.getTcEmail());
-            existingTeacher.setTcDob(updatedTeacher.getTcDob());
-            existingTeacher.setTcPhoneNumber(updatedTeacher.getTcPhoneNumber());
-            existingTeacher.setTcGender(updatedTeacher.getTcGender());
-            existingTeacher.setTcImage(updatedTeacher.getTcImage());
-            existingTeacher.setTcRole(updatedTeacher.getTcRole());
-            existingTeacher.setUpdatedDate(new Timestamp(System.currentTimeMillis())); // Set updated date
-            existingTeacher.setUpdatorId(updatedTeacher.getUpdatorId());
-            existingTeacher.setTcStatus(updatedTeacher.getTcStatus());
-            existingTeacher.setJsonData(updatedTeacher.getJsonData());
+        if (existingTeacherOpt.isPresent()) {
+            Teacher existingTeacher = existingTeacherOpt.get();
+            BeanUtils.copyProperties(updatedTeacherDTO, existingTeacher);
+            existingTeacher.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
 
-            return teacherRepository.save(existingTeacher);
+            existingTeacher = teacherRepository.save(existingTeacher);
+            return convertToDTO(existingTeacher);
+        } else {
+            throw new IllegalArgumentException("Teacher not found with ID: " + tcId);
         }
+    }
 
-        return null;
+    private TeacherDTO convertToDTO(Teacher teacher) {
+        TeacherDTO teacherDTO = new TeacherDTO();
+        BeanUtils.copyProperties(teacher, teacherDTO);
+        teacherDTO.setaId(teacher.getAccount().getaId());
+        return teacherDTO;
     }
 }

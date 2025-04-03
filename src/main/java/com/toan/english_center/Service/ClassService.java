@@ -36,7 +36,7 @@ public class ClassService {
     }
 
     @Transactional
-    public Classes save(Classes classes, String tcId) {
+    public Classes createClass(Classes classes, String tcId) {
         if (classes.getClassId() == null || classes.getClassId().isEmpty()) {
             classes.setClassId(generateSimpleClassId());
         }
@@ -47,6 +47,18 @@ public class ClassService {
 
     private String generateSimpleClassId() {
         return "CL" + String.valueOf(System.currentTimeMillis()).substring(5);
+    }
+
+    @Transactional
+    public Classes updateTeacherForClass(String classId, String tcId) {
+        Classes classes = classRepository.findByClassId(classId);
+        if (classes == null) {
+            throw new IllegalArgumentException("Class not found with ID: " + classId);
+        }
+
+        Teacher teacher = teacherRepository.findById(tcId).orElseThrow(() -> new IllegalArgumentException("Invalid teacher ID"));
+        classes.setTeacher(teacher);
+        return classRepository.save(classes);
     }
 
 }
