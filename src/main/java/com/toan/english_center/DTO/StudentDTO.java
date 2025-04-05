@@ -18,7 +18,7 @@ public class StudentDTO {
     private String svFbUrl;
     private String svRole;
     private LocalDate createdDate;
-    private Timestamp updatedDate;
+    private LocalDate updatedDate;
     private String creatorId; // creator_id
     private String updatorId; // updator_id
     private Integer svStatus; // sv_status
@@ -122,11 +122,11 @@ public class StudentDTO {
         this.createdDate = createdDate;
     }
 
-    public Timestamp getUpdatedDate() {
+    public LocalDate getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Timestamp updatedDate) {
+    public void setUpdatedDate(LocalDate updatedDate) {
         this.updatedDate = updatedDate;
     }
 

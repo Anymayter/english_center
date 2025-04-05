@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class StaffService {
@@ -71,8 +72,9 @@ public class StaffService {
     }
 
     private String generateSimpleTcId() {
-        // Custom logic to generate a simple tcId
-        return "ST" + String.valueOf(System.currentTimeMillis()).substring(5);
+        long currentTime = System.currentTimeMillis() % 1000; // Lấy 3 số cuối của timestamp
+        int randomNum = new Random().nextInt(90) + 10; // Số ngẫu nhiên từ 10 - 99
+        return "ST" + currentTime + randomNum;
     }
 
     @Transactional

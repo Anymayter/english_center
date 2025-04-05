@@ -2,9 +2,8 @@ package com.toan.english_center.Controller;
 
 
 
-import com.toan.english_center.DTO.ScheduleCreateDTO;
+import com.toan.english_center.DTO.ScheduleDTO;
 import com.toan.english_center.DTO.ScheduleResponseDTO;
-import com.toan.english_center.Entity.LearningProgress;
 import com.toan.english_center.Entity.Schedule;
 import com.toan.english_center.Service.ScheduleService;
 import jakarta.validation.Valid;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/schedule")
 public class ScheduleController {
 
@@ -24,7 +24,7 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     @PostMapping("/create")
-    public ResponseEntity<ScheduleResponseDTO> createSchedule(@Valid @RequestBody ScheduleCreateDTO createDTO) {
+    public ResponseEntity<ScheduleResponseDTO> createSchedule(@Valid @RequestBody ScheduleDTO createDTO) {
         Schedule schedule = scheduleService.createSchedule(createDTO);
         ScheduleResponseDTO response = mapToResponseDTO(schedule);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -53,4 +53,15 @@ public class ScheduleController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/student/{svId}")
+    public List<Schedule> getSchedulesByStudent(@PathVariable String svId) {
+        return scheduleService.getSchedulesByStudentId(svId);
+    }
+
+    @GetMapping("/teacher/{tcId}")
+    public List<ScheduleDTO> getSchedulesByTeacherId(@PathVariable String tcId) {
+        return scheduleService.findSchedulesByTeacherId(tcId);
+    }
+
 }

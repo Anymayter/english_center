@@ -1,47 +1,26 @@
-package com.toan.english_center.Entity;
+package com.toan.english_center.DTO;
 
-
-import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 
-@Entity
-@Table(name = "tbl_class")
-public class Classes {
+public class ClassDTO {
 
-    @Id
-    @Column(name = "class_id", length = 20)
+    private String tcId;
     private String classId;
     private String className;
     private String classDescription;
     private Integer totalStudent;
     private LocalDate createdDate;
-    private Timestamp updatedDate;
-    private String creatorId;
-    private String updatorId;
     private Integer classStatus;
     private String jsonData;
-//    private String teacherId; // teacher_id
-
-    @ManyToOne(optional = false, cascade = CascadeType.ALL) // Teacher is mandatory
-    @JoinColumn(name = "tcId", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Teacher teacher;
-
 
     // Getter and setter
 
-
-    public Teacher getTeacher() {
-        return teacher;
+    public String getTcId() {
+        return tcId;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTcId(String tcId) {
+        this.tcId = tcId;
     }
 
     public String getClassId() {
@@ -84,30 +63,6 @@ public class Classes {
         this.createdDate = createdDate;
     }
 
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Timestamp updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public String getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public String getUpdatorId() {
-        return updatorId;
-    }
-
-    public void setUpdatorId(String updatorId) {
-        this.updatorId = updatorId;
-    }
-
     public Integer getClassStatus() {
         return classStatus;
     }
@@ -123,14 +78,4 @@ public class Classes {
     public void setJsonData(String jsonData) {
         this.jsonData = jsonData;
     }
-
-
-//    public Teacher getTeacher() {
-//        return teacher;
-//    }
-//
-//    public void setTeacher(Teacher teacher) {
-//        this.teacher = teacher;
-//    }
-
 }
