@@ -63,4 +63,5 @@ public class ScheduleController {
     public List<ScheduleDTO> getSchedulesByTeacherId(@PathVariable String tcId) {
         return scheduleService.findSchedulesByTeacherId(tcId);
     }
+
 }
